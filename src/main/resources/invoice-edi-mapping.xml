@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.6.xsd">
+	<medi:description name="GKVMessage" version="1.0" />
+	
+	<medi:delimiters component=":" escape="?" field="+"	segment="'" />
+
+	<medi:segments xmltag="InvoiceMessage">
+		<medi:segment segcode="UNB" xmltag="UNB" minOccurs="1"
+			maxOccurs="1">
+			<medi:field xmltag="syntax">
+				<medi:component xmltag="id"></medi:component>
+				<medi:component xmltag="version"></medi:component>
+			</medi:field>
+			
+			<medi:field xmltag="senderIK"></medi:field>
+			
+			<medi:field xmltag="receiverIK"></medi:field>
+			
+			<medi:field xmltag="datetime">
+				<medi:component xmltag="date"></medi:component>
+				<medi:component xmltag="time"></medi:component>
+			</medi:field>
+			<!-- Interchange control reference number muss für jeden datenaustausch 
+				hochgezählt werden und ist eindeutig -->
+			<medi:field xmltag="icrn"></medi:field>
+			<!-- Leistungsbereich area of supply H = Rehabilitationssport I = Funktionstraining -->
+			<medi:field xmltag="areaOfSupply"></medi:field>
+			<medi:field xmltag="filename"></medi:field>
+			<!-- 0 = Testdatei 1 = Erprobungsdatei 2 = Echtdatei -->
+			<medi:field xmltag="testIndicator"></medi:field>
+		</medi:segment>
+		<medi:segmentGroup xmltag="unhs" maxOccurs="-1">
+			<!--
+				UNH
+				Kopf-Segment einer Nachricht; es dient dazu, eine Nachricht zu
+				eröffnen, zu identifizieren und zu beschreiben. Eine Nachricht
+				besteht aus einer definierten Folge von Segmenten, die einmal
+				oder mehrfach vorkommen können oder nur bei bestimmten
+				Geschäftsvorfällen erforderlich sind. 			
+			-->
+			<medi:segment segcode="UNH" xmltag="UNH" minOccurs="1" maxOccurs="1">
+				<!-- 
+					Nachrichtenreferenznummer
+				
+					Genutzt werden die ersten 5 Stellen;
+					einzutragen ist die fortlaufende
+					Nummer der UNH-Segmente zwischen
+					UNB und UNZ mit führenden Nullen,
+					z.B. 00001 für 1. UNH. 
+				-->
+				<medi:field xmltag="messageReferenceNumber"></medi:field>
+				<!-- 
+					Nachrichtenkennung:
+
+					Bei Nachricht SLGA ist einzutragen:
+					SLGA:09:0:0
+					Bei Nachricht SLLA ist einzutragen:
+					SLLA:09:0:0					
+				-->
+				<medi:field xmltag="messageIdentifier">
+					<!--
+						Nachr-Typ-Kennung:
+						
+						Genutzt werden die ersten 4 Stellen;
+						
+						einzutragen sind: SLGA oder SLLA.					
+					-->
+					<medi:component xmltag="type"></medi:component>
+					<!--
+						Versionsnummer
+						
+						Genutzt werden die ersten 2 Stellen;
+						
+						einzutragen ist die Nummer der
+						benutzten Version des Nachrichtentypes
+						lt. Abschnitt 5.5 dieser
+						Anlage; d.h. Version 09.						
+					-->					
+					<medi:component xmltag="version"></medi:component>
+					<!-- ist immer 0 (Null) -->
+					<medi:component xmltag="typeReleaseNumber"></medi:component>
+					<!-- ist immer 0 (Null) -->
+					<medi:component xmltag="administrativeOrganisation"></medi:component>
+				</medi:field>
+			</medi:segment>
+			<!-- 
+				Das Segment (FKT) enthält Informationen über die zu verarbeitende
+				Rechnung, den Rechnungssteller (Leistungserbringer
+				oder Abrechnungsstelle) und das IK der Krankenkasse
+				von der Krankenversichertenkarte bzw. von der ärztlichen
+				Verordnung.
+			 -->
+			<medi:segment segcode="FKT" xmltag="FKT" minOccurs="1" maxOccurs="1">
+				<!-- 
+					Verarbeitungskennzeichen
+				 -->
+				<medi:field xmltag="processingFlag"></medi:field>
+				<!-- Bei Sammelrechnung = J sonst null = nill -->
+				<medi:field xmltag="collectiveInvoice"></medi:field>
+				<!-- 
+					IK des Rechnungsstellers/
+					Leistungserbringers
+
+					Es ist das IK des Leistungserbringers
+					anzugeben – mit folgender Ausnahme:
+					Erfolgt die Abrechnung über eine
+					Abrechnungsstelle mit Inkassovollmacht,
+					so ist in der Sammelrechnungs-SLGA
+					das IK der Abrechnungsstelle
+					anzugeben.
+				 -->	
+				<medi:field xmltag="billerIK"></medi:field>
+				<!-- 
+					IK des Kostenträgers				
+					
+					Einzutragen ist das IK des Kostenträ-
+					gers auf den das IK der KV-Karte in
+					der Kostenträgerdatei verweist; diese
+					Angabe ist identisch mit dem IK des
+					Kostenträgers im FKT-Segment der
+					zugehörigen SLLA-Nachricht.
+				 -->
+				<medi:field xmltag="receiverIK"></medi:field>
+				<!-- 
+					IK der Krankenkasse von der KVKarte bzw. der ärztlichen Verordnung
+					
+					IK der Krankenkasse von der KVKarte
+					bzw. der ärztlichen Verordnung
+					ist zwingend anzugeben, außer es
+					handelt sich um eine Sammelrechnung-SLGA.
+					Bei allen SLGANachrichten
+					als Gesamtrechnung ist
+					diese Angabe identisch mit
+					SLLA.FKT.IK der Krankenkasse der
+					zugehörigen SLLA-Nachricht. 				
+				 -->
+				<medi:field xmltag="healthInsuranceIK"></medi:field>
+				<!-- ist identisch mit sender von unb -->
+				<medi:field xmltag="senderIK"></medi:field>
+			</medi:segment>
+			<!-- 
+				REC
+				Das Segment ist je Nachricht einmal zu
+				übermitteln und ist identisch mit dem
+				REC-Segment der zugehörigen SLLANachricht.			
+			 -->
+			<medi:segment segcode="REC" xmltag="REC" minOccurs="1" maxOccurs="1">
+				<!-- 
+					Rechnungsnummer
+					
+					Datenelementgruppe bestehend aus
+					Sammel-Rechnungsnummer:EinzelRechnungsnummer.
+					Einzutragen ist die eindeutige Rechnungsnummer,
+					die der Rechnungssteller
+					vergibt. Eine Rechnungsnummer ist
+					eindeutig, wenn sie über alle Rechnungsjahre
+					hinweg - ohne Kombination
+					mit anderen identifizierenden
+					Schlüsseln oder Merkmalen (z. B. IK
+					des Leistungserbringers, Rechnungsdatum)
+					– für eine Krankenkasse nur
+					einer einzigen Rechnung zugeordnet
+					werden kann.
+					Diese Rechnungsnummer ist vollständig
+					und unverändert auf die Urbelege
+					zu übernehmen (siehe Richtlinien § 4
+					Abs.1 und § 3 des Richtlinientextes).
+					Außer bei der Sammelrechnung-SLGA
+					muss diese Angabe übereinstimmen
+					mit SLLA.REC.Rechnungsnummer der
+					zugehörigen SLLA-Nachricht. Die
+					Rechnungsnummer im Datensatz muss
+					identisch sein mit der Rechnungsnummer
+					auf dem Begleitzettel (vgl.
+					Anlage 4).
+					Sonderzeichen (einschließlich Leerzeichen)
+					sind nicht zugelassen, ausgenommen
+					sind der Bindestrich „-„ und
+					der Schrägstrich „/“ als Gliederungszeichen.
+					Aufeinanderfolgende Gliederungszeichen
+					sind unzulässig. Die
+					Rechnungsnummer darf nicht mit einem
+					Gliederungszeichen beginnen
+					bzw. enden.				
+				 -->
+				<medi:field xmltag="invoiceNumber">
+					<medi:component xmltag="invoiceNumber"></medi:component>
+					<!-- 
+						Sammel-Rechnungsnummer
+						
+						Die Einzel-Rechnungsnummer ist zusätzlich
+						zur SammelRechnungsnummer
+						anzugeben, wenn
+						eine SLGA-Nachricht als Sammelrechnung
+						zusätzlich in der Nutzdatendatei
+						übermittelt wird, ansonsten wird lediglich
+						das Datenelement SammelRechnungsnummer
+						gefüllt und die
+						Einzel-Rechnungsnummer auf „0“ gesetzt
+						(zum Beispiel 00234567:0					
+					 -->
+					<medi:component xmltag="collectiveInvoiceNumber"></medi:component>
+				</medi:field>
+				<!-- Rechnungsdatum JJJJMMTT -->
+				<medi:field xmltag="date"></medi:field>
+				<!-- 
+					Rechnungsart				
+					
+					Siehe Schlüssel Rechnungsart
+					Anlage 3 Abschnitt 8.1.4.
+					Dieser Schlüsselwert muss in der
+					Sammelrechnungs-SLGA und allen
+					zugehörigen SLGA-und SLLANachrichten
+					gleich sein.				
+				 -->
+				<medi:field xmltag="invoiceType"></medi:field>
+			</medi:segment>
+			<medi:segment segcode="INV" xmltag="INV" maxOccurs="-1">
+				<medi:field xmltag="insuranceNumber"></medi:field>
+				<medi:field xmltag="insuranceStatus"></medi:field>
+				<medi:field xmltag="freeField"></medi:field>
+				<medi:field xmltag="documentNumber"></medi:field>
+				<medi:field xmltag="contractCharacteristics"></medi:field>
+			</medi:segment>
+			<!-- 
+				Rechnungssummen (Status)
+				
+				GES
+				Das Segment muss je Nachricht mindestens
+				zweimal und kann höchstens
+				neunmal vorkommen. Es ist stets ein
+				GES-Segment für den Summenstatus
+				00 zuerst zu übermitteln. Diese
+				Summe ergibt sich aus der Addition
+				der nachfolgend anzugebenden Betragssummen
+				des jeweiligen Versichertenstatus
+				(SLGA). Die Betragssumme
+				des Versichertenstatus (SLGA)
+				entspricht den Summen der Abrechnungsfälle
+				(SLLA), die diesen Status
+				beinhalten.				
+			 -->
+			<medi:segment segcode="GES" xmltag="GES" maxOccurs="9">
+				<!-- 
+					Status
+					
+					Siehe Schlüssel Summenstatus
+					Anlage 3 Abschnitt 8.1.6
+					
+					1. und 2. Stelle
+					00 = Gesamtsumme aller Status
+					11 = Mitglieder
+					31 = Angehörige
+					51 = Rentner
+					99 = nicht zuzuordnende Status					
+				 -->
+				<medi:field xmltag="status"></medi:field>
+				<!-- 
+					Gesamtrechnungsbetrag
+					
+					Gesamtrechnungsbetrag (ggf. inklusive
+					Mehrwertsteuer)
+					Berechnungsregel:
+					GES.Gesamtbruttobetrag minus
+					GES.Gesamtbetrag Zuzahlung
+					und/oder Eigenanteil. 					
+				 -->
+				<medi:field xmltag="totalInvoiceAmount"></medi:field>
+				<!-- 
+					Gesamtbruttobetrag
+					
+					Summe der Gesamtbruttobeträge der
+					Abrechnungsfälle (inklusive gesetzlicher
+					Zuzahlungsbeträge oder Eigenanteil
+					sowie ggf. Mehrwertsteuer) aus
+					BES					
+				 -->
+				<medi:field xmltag="totalGrossAmount"></medi:field>
+				<!-- 
+					Gesamtbetrag Zuzahlung und/oder Eigenanteil
+					
+					Summe der gesetzlichen Zuzahlungen
+					und/oder der Eigenanteile der Abrechnungsfälle
+					aus BES
+					Berechnungsregel:
+					Summe aller Abrechnungsfälle(BES.Gesambetrag
+					gesetzliche Zuzahlung
+					+ BES.Gesamtbetrag Eigenanteil).					
+				 -->
+				<medi:field xmltag="additionalPayment"></medi:field>
+			</medi:segment>
+			<medi:segment segcode="NAM" xmltag="NAM" minOccurs="1" maxOccurs="1">
+				<medi:field xmltag="name1"></medi:field>
+				<medi:field xmltag="name2"></medi:field>
+				<medi:field xmltag="name3"></medi:field>
+				<medi:field xmltag="name4"></medi:field>
+			</medi:segment>
+			
+			<!-- SLLA -->
+			<medi:segmentGroup xmltag="sllas" maxOccurs="-1">
+				<!-- 
+					Information Versicherte:
+					Das Segment enthält die Versichertendaten eines Abrechnungsfalles
+					(Verordnung), und gilt gleichzeitig als BeginnSegment
+					für einen Abrechnungsfall. Jeder Abrechnungsfall ist
+					mit einer eindeutigen Belegnummer zu kennzeichnen, die der
+					auf der Verordnung zu übertragenen Belegnummer (s. § 4 des
+					Richtlinientextes) entsprechen muss.				
+				 -->
+				<medi:segment segcode="INV" xmltag="INV" minOccurs="1" maxOccurs="1">
+					<!-- 
+						Versicherten-Nummer:
+						Krankenversichertennummer ist
+						zwingend gemäß KV-Karte bzw.
+						ärztlicher Verordnung anzugeben.
+						Sofern nicht bekannt, wird die Anschrift
+						und das Geburtsdatum des
+						Versicherten übermittelt. (Segment
+						NAD).					
+					 -->
+					<medi:field xmltag="insuranceNumber"></medi:field>
+					<!-- 
+						Versichertenstatus:
+						Anzugeben ist der Versichertenstatus
+						von der Verordnung (alle lesbaren
+						Zeichen werden nacheinander in das
+						Feld geschrieben und ggfs. auf 5
+						Stellen rechtsbündig mit Nullen ergänzt,
+						z.B. 10000 oder 18000)
+						Sofern nicht bekannt, wird die Anschrift
+						und das Geburtsdatum des
+						Versicherten übermittelt (Segment
+						NAD).						
+					 -->
+					 <medi:field xmltag="insuredStatus"></medi:field>
+					 <!-- 
+					 	Freifeld:
+					 	nicht spezifiziert
+					 -->
+					 <medi:field xmltag="freeField"></medi:field>
+					 <!--
+					 	Belegnummer:
+						Eindeutige Nummer innerhalb der
+						Gesamtrechnung (siehe auch § 4 des
+						Richtlinientextes).					 	
+					 -->
+					 <medi:field xmltag="documentNumber"></medi:field>
+					 <!--
+					 	Kennzeichen Besondere Versorgungsform:
+						Anzugeben ist das Vertragskennzeichen
+						für besondere Versorgungsformen
+						gemäß der vertraglichen Vereinbarungen.
+					 -->
+					 <medi:field xmltag="plateSpecialCareForm"></medi:field>
+				</medi:segment>
+				<!-- 
+					Name und Adresse Versicherter:
+					NAD Das Segment ist je Abrechnungsfall
+					einmal zu übermitteln.
+				 -->
+				<medi:segment segcode="NAD" xmltag="NAD" minOccurs="1" maxOccurs="1">
+					<!-- Vers.-Nachname -->
+					<medi:field xmltag="insuredLastname"></medi:field>
+					<!-- Vers.-Vorname -->
+					<medi:field xmltag="insuredFirstname"></medi:field>
+					<!-- Vers.-Geburtsdatum JJJJMMTT -->
+					<medi:field xmltag="insuredBirthday"></medi:field>
+					<!-- 
+						Vers.-Straße-/Nr.:
+						Die Anschrift ist zwingend anzugeben,
+						sofern die Versichertennummer/Versichertenstatus
+						nicht bekannt
+						ist.					
+					-->
+					<medi:field xmltag="insuredStreedAddress"></medi:field>
+					<!-- 
+						Vers.-PLZ:
+						Bei Inlandsanschrift ist die gültige,
+						5-stellige Postleitzahl ohne weitere
+						Zusätze anzugeben, sofern die Versichertennummer/Versichertenstatus
+						nicht bekannt
+						sind.						
+					 -->
+					<medi:field xmltag="insuredPostalcode"></medi:field>
+					<!-- 
+						Vers.-Wohnort:
+						Die Anschrift ist zwingend anzugeben,
+						sofern die Versichertennummer/Versichertenstatus
+						nicht bekannt
+						ist.
+					-->
+					<medi:field xmltag="insuredCity"></medi:field>
+					<!--
+						Vers.-Länderkennzeichen:
+						Bei Auslandsanschrift ist das Länderkennzeichen
+						gemäß Anlage 3
+						Schlüssel 8.5 zwingend anzugeben,
+						sofern die Versichertennummer/Versichertenstatus
+						nicht bekannt
+						sind.
+						Anmerkung: die Liste ist zu lang, um das hier zu dokumentieren					
+					-->
+					<medi:field xmltag="insuredCountry"></medi:field>
+				</medi:segment>
+				<!--
+					Einzelfallnachweis:
+					Das Segment dient zur Abrechnung der einzelnen Positionen,
+					die für den abzurechnenden Fall angefallen sind. Es ist so oft
+					wiederholbar, wie Abrechnungspositionen vorkommen.
+					
+					ENF
+					Das Segment ist für jede Abrechnungsposition,
+					bezogen auf den Tag
+					der Leistungserbringung, einmal zu
+					übermitteln.					
+				 -->
+				<medi:segment segcode="ENF" xmltag="ENF" minOccurs="1" maxOccurs="-1">
+					<!-- 
+						Identifikationsnummer:
+						Zur Identifikation aller zuzahlungstechnisch
+						zusammengehörenden
+						Abrechnungspositionen ist jeweils
+						die gleiche Identifikationsnummer
+						zu übermitteln.
+						Bei der Abrechnung von zuzahlungsfreien
+						Positionsnummern im
+						Zusammenhang mit zuzahlungspflichtigen
+						Positionsnummern sind
+						die zuzahlungsfreien Positionsnummern
+						mit einer eigenen
+						Identifikationsnummer anzugeben.											
+					 -->
+					<medi:field xmltag="identificationNumber"></medi:field>
+					<!-- 
+						Leistungserbringergruppe:
+						Datenelementgruppe bestehend aus
+						Abrechnungscode:Tarifkennzeichen.
+					-->
+					<medi:field xmltag="serviceGroup">
+						<!-- 
+							Abrechnungscode:
+							Siehe Schlüssel Abrechnungscode
+							Anlage 3 Abschnitt 8.1.5.1.
+							
+							61 = Leistungserbringer von Rehabilitationssport
+							62 = Leistungserbringer von Funktionstraining
+							63 = Leistungserbringer für ergänzende Rehabilitationsmaßnahmen
+							64 = - nicht besetzt -
+							65 = Sonstiger Leistungserbringer
+							66 = Leistungserbringer von Präventions- und Gesundheits-
+							 förderungsmaßnahmen im Rahmen von ambulanten
+							 Vorsorgeleistungen
+							67 = Ambulantes Rehazentrum / Mobile Rehabilitationseinrichtung
+							68 = Sozialpädiatrische Zentren/Frühförderstellen
+							69 = Soziotherapeutischer Leistungserbringer
+							75 = Spezialisierte ambulante Palliativversorgung (SAPV)							
+						-->
+						<medi:component xmltag="billingCode"></medi:component>
+						<!-- 
+							Tarifkennzeichen:
+							
+							s.o. Leistungserbrigerschlüssel							
+						-->
+						<medi:component xmltag="rateIndicator"></medi:component>
+					</medi:field>
+					<!-- 
+						Art der abgegebenen Leistung (Abrechnungspositionsnummer)
+						
+						Siehe Schlüssel Abrechnungspositionsnummer
+						Anlage 3 Abschnitt
+						8.2.1 bis 8.2.10.					
+						
+						http://www.gkv-datenaustausch.de/media/dokumente/leistungserbringer_1/sonstige_leistungserbringer/positionsnummernverzeichnisse/20120712_Sonstige-Leistungen.pdf	
+					-->
+					<medi:field xmltag="billingItemNumber"></medi:field>
+					<!-- 
+						Anzahl/Menge
+
+						Anzahl der Abrechnungspositionen
+						z.B. 1 x Massage; 20 Kilometer usw.
+						Es dürfen nur dann Abrechnungspositionen
+						in einem ENF-Segment zusammengefasst
+						werden, wenn sie
+						am selben Tag erbracht worden
+						sind. Andernfalls ist für jeden Tag
+						der Leistungserbringung ein eigenes
+						ENF-Segment zu erstellen.					
+					-->
+					<medi:field xmltag="quantity"></medi:field>
+					<!-- 
+						Einzelbetrag der Abrechnungsposition
+						
+						Einzelpreis (vereinbarter
+						Preis/Festbetrag)
+						Als Einzelpreis ist immer der Preis
+						einer Abrechnungsposition zu verstehen.
+						Sofern ein Nettopreis zuzüglich
+						MwSt. vereinbart wurde, ist
+						der Nettopreis in ENF anzugeben
+						und das Segment MWS zu füllen. Ist
+						der Einzelpreis inklusive MwSt. vereinbart,
+						ist dieser in ENF anzugeben
+						und kein Segment MWS anzugeben.						
+					-->
+					<medi:field xmltag="amount"></medi:field>
+					<!-- 
+						Datum der Leistungserbringung
+						
+						Tag der Leistungserbringung
+						(JJJJMMTT).						
+					-->
+					<medi:field xmltag="dateOfServiceProvision"></medi:field>
+					<!-- 
+						Betrag der Zuzahlung
+						
+						Der Einzelbetrag der prozentualen
+						Zuzahlung bzw. der Zuzahlungsbetrag
+						pro Tag ist zwingend je Abrechnungsposition
+						zu berechnen
+						und anzugeben, sofern dieser vom
+						Versicherten zu entrichten ist.
+						
+						Berechnungsregel:
+						(ENF.Einzelbetrag der Abrechnungsposition
+						plus ggf. MWS.Betrag
+						Mehrwertsteuer*) mal Zuzahlungsprozentsatz
+						* Der Betrag Mehrwertsteuer ist auf
+						die einzelne Position mit dem Mengenfaktor
+						1 herunterzurechnen und
+						kaufmännisch zu runden.
+						(Der ermittelte Betrag ist kaufmännisch
+						zu runden).						
+					-->
+					<medi:field xmltag="additionalPayment"></medi:field>
+				</medi:segment>
+				<!--
+					Zusatzinfo Verordnung
+					
+					ZUV
+					Das Segment ist/kann je Abrechnungsfall
+					einmal übermittelt werden.				
+				 -->
+				<medi:segment segcode="ZUV" xmltag="ZUV" minOccurs="1" maxOccurs="1">
+					<!-- 
+						Betriebsstättennummer:
+						
+						Inhalt des Feldes 'Betriebsstättennummer'
+						(ggf. IK des Krankenhauses)
+						aus der Verordnung ist
+						zwingend anzugeben. Ist die Betriebsstättennummer
+						nicht vorhanden,
+						ist 999999999 anzugeben,
+						soweit keine anderweitigen Regelungen
+						bestehen. Es sind nur Ziffern
+						von 0 bis 9 zu verwenden. Dies gilt
+						auch bis zum Zeitpunkt der endgültigen
+						Einführung der Betriebsstättennummer.						
+					-->
+					<medi:field xmltag="registrationNumber"></medi:field>
+					<!-- 
+						Lebenslange Arztnummer
+						
+						Inhalt des Feldes 'Vertragsarztnummer/Arzt-Nr.'
+						aus der Verordnung
+						ist zwingend anzugeben. Das Auffüllen
+						des Feldes auf 9 Stellen ist
+						unzulässig. Es sind nur die Ziffern 0
+						- 9 zu verwenden. Ist keine Nummer
+						eingetragen, ist das Feld mit
+						„999999999“ zu übermitteln, sofern
+						keine anderweitigen Regelungen
+						bestehen. Bei Verordnungen durch
+						Zahnärzte ist die Nummer des
+						Zahnarztes einzutragen.						
+					-->
+					<medi:field xmltag="medicalNumber"></medi:field>
+					<!-- 
+						Verordnungs-, Ausstell- oder Einsatzdatum
+						
+						JJJJMMTT.
+						Verordnungsdatum aus Verordnung
+						oder Ausstell- oder Einsatzdaten
+						sind zwingend anzugeben, soweit
+						diese vorgesehen oder vereinbart
+						sind.						
+					-->
+					<medi:field xmltag="medicalPrescriptionDate"></medi:field>
+					<!-- 
+						Zuzahlungskennzeichen:
+						
+						Siehe Schlüssel Zuzahlungskennzeichen
+						Anlage 3 Abschnitt 8.1.3.
+
+						0 = keine gesetzliche Zuzahlung
+						1 = Zuzahlungsbefreit
+						2 = keine Zuzahlung trotz schriftlicher Zahlungsaufforderung
+						3 = Zuzahlungspflichtig
+						4 = Übergang zuzahlungspflichtig zu zuzahlungsfrei *
+						5 = Übergang zuzahlungsfrei zu zuzahlungspflichtig **												
+					-->
+					<medi:field xmltag="additionalPaymentIndicator"></medi:field>
+					<!-- 
+						Unfallkennzeichen:
+						
+						Siehe Schlüssel Unfall/Sonstiges
+						Anlage 3 Abschnitt 8.1.2
+						Die Angabe der Daten auf der Verordnung
+						sind zwingend im Datenaustausch
+						anzugeben bzw. zu
+						übermitteln.						
+					-->
+					<medi:field xmltag="accidentIndicator"></medi:field>
+					<!-- 
+						Kennzeichen BVG/Sonstiges
+						
+						Siehe Schlüssel BVG
+						Anlage 3 Abschnitt 8.1.2.1
+						
+						6 = BVG						
+					-->
+					<medi:field xmltag="indicatorBVG"></medi:field>
+					<!-- 
+						Kennzeichen Verordnungsbesonderheiten
+						
+						Siehe Schlüssel Kennzeichen Verordnungsbesonderheiten;
+						Anlage 3
+						Abschnitt 8.1.11.
+						
+						1 = Verordnung von einem Zahnarzt/Kieferorthopäden
+						2 = Verordnung im Zusammenhang mit der Schwangerschaft
+						oder der Entbindung												
+					-->
+					<medi:field xmltag="indicatorMedicalPrescriptionFeature"></medi:field>
+				</medi:segment>
+				<!-- 
+					Betrags-Summen
+					
+					Das Segment enthält Angaben über den abzurechnenden Gesamtbruttobetrag
+					eines Abrechnungsfalles (Verordnung)
+					(Summe aller ENF-Beträge ggf. zuzüglich der Mehrwertsteuer).
+					
+					BES
+					Das Segment ist je Abrechnungsfall
+					einmal zu übermitteln					 				
+				 -->
+				<medi:segment segcode="BES" xmltag="BES" minOccurs="1" maxOccurs="1">
+					<!-- 
+						Gesamtbetrag Brutto
+						
+						Gesamtbetrag Brutto je Abrechnungsfall
+						(einschl. evtl. Mehrwertsteuer).
+						Berechnungsregel:
+						Summe über alle Abrechnungspositionen
+						des Abrechnungsfalls von:
+						(((ENF.Einzelbetrag der Abrechnungsposition
+						mal
+						ENF.Anzahl/Menge) plus ggf.
+						MWS.Betrag Mehrwertsteuer)) kaufmännisch
+						gerundet).						
+					-->
+					<medi:field xmltag="totalGrossAmount"></medi:field>
+					<!-- 
+						Gesamtbetrag gesetzliche Zuzahlung
+						
+						je Abrechnungsfall.
+						Berechnungsregel:
+						Summe
+						(BES.Gesamtbetrag prozentuale Zuzahlung
+						je Abrechnungsfall
+						+BES.PauschalerZuzahlungsbetrag je
+						Abrechnungsfall
+						+(Summe über alle Leistungen
+						(ZUZ.Betrag Gesetzliche Zuzahlung)).						
+					-->
+					<medi:field xmltag="amountLegalAdditionalPayment"></medi:field>
+					<!-- 
+						Gesamtbetrag prozentuale Zuzahlung:
+						
+						je Abrechnungsfall.
+						Berechnungsregel:
+						Summe über alle Abrechnungspositionen
+						des Abrechnungsfalls von:
+						(ENF.Betrag der Zuzahlung mal
+						ENF.Anzahl/Menge) kaufmännisch
+						gerundet.						
+					-->
+					<medi:field xmltag="totalAmountLegalAdditionalPayment"></medi:field>
+					<!-- 
+						pauschaler Zuzahlungsbetrag
+						
+						Pauschaler Zuzahlungsbetrag je
+						Abrechnungsfall (Verordnungsblatt).
+						10 Euro maximal, jedoch höchstens
+						die Differenz Gesamtbetrag Brutto
+						abzüglich Gesamtbetrag prozentuale
+						Zuzahlung						
+					-->
+					<medi:field xmltag="allInAdditionalPayment"></medi:field>
+					<!-- 
+						Gesamtbetrag Eigenanteil:
+						
+						Gesamtbetrag Eigenanteil
+						Berechnungsregel:
+						Summe über alle Abrechnungspositionen
+						(ZUZ.Betrag Eigenanteil).						
+					-->
+					<medi:field xmltag="totalAmountDeductible"></medi:field>
+				</medi:segment>
+			</medi:segmentGroup>
+			<!-- END SLLA -->
+			<!-- 
+				Ende-Segment einer Nachricht. Beendet eine Nachricht und ermöglicht
+				die Prüfung auf Vollständigkeit.
+				
+				
+			-->
+			<medi:segment segcode="UNT" xmltag="UNT" minOccurs="1" maxOccurs="1">
+				<!-- 
+					Anzahl Einheiten
+					
+					Anzahl der Segmente in der Nachricht
+					einschließlich der Segmente
+					UNH und UNT mit führenden Nullen					
+				-->
+				<medi:field xmltag="numberOfUnits"></medi:field>
+				<!-- 
+					Nachrichtenreferenznummer
+					
+					wie in UNH				
+				-->
+				<medi:field xmltag="messageReferenceNumber"></medi:field>
+			</medi:segment>
+		</medi:segmentGroup>
+		<medi:segment segcode="UNZ" xmltag="UNZ" minOccurs="1" maxOccurs="1">
+			<medi:field xmltag="numberOfMessages"></medi:field>
+			<!-- Interchange control reference number muss für jeden datenaustausch 
+				hochgezählt werden und ist eindeutig -->
+			<medi:field xmltag="icrn"></medi:field>
+		</medi:segment>
+	</medi:segments>
+</medi:edimap>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.6.xsd">
+	<medi:description name="GKVMessage" version="1.0" />
+	
+	<medi:delimiters component=":" escape="?" field="+" segment="'" />
+	
+	<medi:segments xmltag="HealthInsuranceMessage" ignoreUnmappedSegments="true">
+		<medi:segment segcode="UNA:" xmltag="UNA" minOccurs="0" maxOccurs="1">
+		    <medi:field xmltag="field"></medi:field>
+		</medi:segment>
+		<medi:segment segcode="UNB" xmltag="UNB" minOccurs="1" maxOccurs="1" truncatable="true">
+			<medi:field xmltag="syntax" required="true">
+				<medi:component xmltag="id"></medi:component>
+				<medi:component xmltag="version"></medi:component>
+			</medi:field>
+			<medi:field xmltag="senderIK" required="true"></medi:field>
+			<medi:field xmltag="receiverIK" required="true"></medi:field>
+			<medi:field xmltag="datetime" required="true">
+				<medi:component xmltag="date"></medi:component>
+				<medi:component xmltag="time"></medi:component>
+			</medi:field>
+			<medi:field xmltag="icrn" required="true"></medi:field>
+			<medi:field xmltag="areaOfSupply"></medi:field>
+			<medi:field xmltag="filename" required="true"></medi:field>
+		</medi:segment>
+
+		<medi:segmentGroup xmltag="unhs" maxOccurs="-1">
+			<medi:segment segcode="UNH" xmltag="UNH" minOccurs="1" maxOccurs="1">
+				<medi:field xmltag="messageReferenceNumber" required="true"></medi:field>
+				<medi:field xmltag="messageIdentifier" required="true">
+					<medi:component xmltag="type" required="true"></medi:component>
+					<medi:component xmltag="version" required="true"></medi:component>
+					<medi:component xmltag="typeReleaseNumber" required="true"></medi:component>
+					<medi:component xmltag="administrativeOrganisation" required="true"></medi:component>
+				</medi:field>
+			</medi:segment>
+			<medi:segment segcode="IDK" xmltag="IDK" maxOccurs="1" truncatable="true">
+				<medi:field xmltag="institutionIdentification" required="true"></medi:field>
+				<medi:field xmltag="typeOfInstitution" required="true"></medi:field>
+				<medi:field xmltag="shortName" required="true"></medi:field>
+				<medi:field xmltag="vknr"></medi:field>
+			</medi:segment>
+			<medi:segment segcode="VDT" xmltag="VDT" maxOccurs="1" truncatable="true">
+				<medi:field xmltag="effectiveDateFrom" required="true"></medi:field>
+				<medi:field xmltag="effectiveDateTo"></medi:field>
+			</medi:segment>
+			<medi:segment segcode="FKT" xmltag="FKT" maxOccurs="1">
+				<medi:field xmltag="processingFlag"></medi:field>
+			</medi:segment>
+			<medi:segment segcode="VKG" xmltag="VKG" minOccurs="0" maxOccurs="-1" truncatable="true">
+				<medi:field xmltag="typeOfLink" required="true"></medi:field>
+				<medi:field xmltag="ikOfLinkPartner" required="true"></medi:field>
+				<medi:field xmltag="serviceProviderGroup"></medi:field>
+				<medi:field xmltag="ikOfAccountingService"></medi:field>
+				<medi:field xmltag="typeOfDataDelivery"></medi:field>
+				<medi:field xmltag="typeOfTransmissionMedium"></medi:field>
+				<medi:field xmltag="countyOfServiceProvider"></medi:field>
+				<medi:field xmltag="kvOfServiceProvider"></medi:field>
+				<medi:field xmltag="rateIndicator"></medi:field>
+			</medi:segment>
+			<medi:segmentGroup xmltag="contactPersons" minOccurs="0" maxOccurs="-1">
+				<medi:segment segcode="NAM" xmltag="NAM" maxOccurs="1" truncatable="true">
+					<medi:field xmltag="number" required="true"></medi:field>
+					<medi:field xmltag="name1" required="true"></medi:field>
+					<medi:field xmltag="name2"></medi:field>
+					<medi:field xmltag="name3"></medi:field>
+					<medi:field xmltag="name4"></medi:field>
+				</medi:segment>
+				<medi:segment segcode="ANS" xmltag="ANS" maxOccurs="-1" truncatable="true">
+					<medi:field xmltag="typeOfAddress" required="true"></medi:field>
+					<medi:field xmltag="postalCode" required="true"></medi:field>
+					<medi:field xmltag="city" required="true"></medi:field>
+					<medi:field xmltag="address"></medi:field>
+				</medi:segment>
+			</medi:segmentGroup>
+			<medi:segment segcode="ASP" xmltag="ASP" minOccurs="0" maxOccurs="-1" truncatable="true">
+				<medi:field xmltag="number" required="true"></medi:field>
+				<medi:field xmltag="phone"></medi:field>
+				<medi:field xmltag="fax"></medi:field>
+				<medi:field xmltag="name"></medi:field>
+				<medi:field xmltag="fieldOfWorkFromContactPerson"></medi:field>
+			</medi:segment>
+			<medi:segmentGroup xmltag="transmissions" minOccurs="0" maxOccurs="-1">
+				<medi:segment segcode="UEM" xmltag="UEM" minOccurs="0" maxOccurs="-1">
+					<medi:field xmltag="typeOfTransmissionMedium"></medi:field>
+					<medi:field xmltag="parameter"></medi:field>
+					<medi:field xmltag="charset"></medi:field>
+				</medi:segment>
+				<medi:segment segcode="DFU" xmltag="DFU" minOccurs="0" maxOccurs="-1">
+					<medi:field xmltag="number"></medi:field>
+					<medi:field xmltag="transmissionProtocol"></medi:field>
+					<medi:field xmltag="userIdentification"></medi:field>
+					<medi:field xmltag="transmissionFrom"></medi:field>
+					<medi:field xmltag="transmissionTo"></medi:field>
+					<medi:field xmltag="transmissionDays"></medi:field>
+					<medi:field xmltag="communicationChannel"></medi:field>
+				</medi:segment>			
+			</medi:segmentGroup>
+			<medi:segment segcode="UNT" xmltag="UNT" minOccurs="0" maxOccurs="1">
+				<medi:field xmltag="numberOfUnits"></medi:field>
+				<medi:field xmltag="messageReferenceNumber"></medi:field>
+			</medi:segment>
+		</medi:segmentGroup>
+		<medi:segment segcode="UNZ" xmltag="UNZ" minOccurs="0" maxOccurs="1">
+			<medi:field xmltag="numberOfMessages"></medi:field>
+			<medi:field xmltag="icrn"></medi:field>
+		</medi:segment>
+	</medi:segments>
+</medi:edimap>

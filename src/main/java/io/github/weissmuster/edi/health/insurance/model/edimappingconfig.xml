@@ -1,0 +1,105 @@
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.5.xsd">
+    <medi:description name="GKVMessage" version="1.0"/>
+    <medi:delimiters component=":" escape="?" field="+" segment="'"/>
+    <medi:segments xmltag="HealthInsuranceMessage">
+        <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="0" segcode="UNA:" truncatable="false" xmltag="UNA">
+            <medi:field required="false" truncatable="false" xmltag="field"/>
+        </medi:segment>
+        <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="UNB" truncatable="true" xmltag="UNB">
+            <medi:field required="true" truncatable="false" xmltag="syntax">
+                <medi:component required="false" truncatable="false" xmltag="id"/>
+                <medi:component required="false" truncatable="false" xmltag="version"/>
+            </medi:field>
+            <medi:field required="true" truncatable="false" xmltag="senderIK"/>
+            <medi:field required="true" truncatable="false" xmltag="receiverIK"/>
+            <medi:field required="true" truncatable="false" xmltag="datetime">
+                <medi:component required="false" truncatable="false" xmltag="date"/>
+                <medi:component required="false" truncatable="false" xmltag="time"/>
+            </medi:field>
+            <medi:field required="true" truncatable="false" xmltag="icrn"/>
+            <medi:field required="false" truncatable="false" xmltag="areaOfSupply"/>
+            <medi:field required="true" truncatable="false" xmltag="filename"/>
+        </medi:segment>
+        <medi:segmentGroup maxOccurs="-1" minOccurs="1" xmltag="unhs">
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="UNH" truncatable="false" xmltag="UNH">
+                <medi:field required="true" truncatable="false" xmltag="messageReferenceNumber"/>
+                <medi:field required="true" truncatable="false" xmltag="messageIdentifier">
+                    <medi:component required="true" truncatable="false" xmltag="type"/>
+                    <medi:component required="true" truncatable="false" xmltag="version"/>
+                    <medi:component required="true" truncatable="false" xmltag="typeReleaseNumber"/>
+                    <medi:component required="true" truncatable="false" xmltag="administrativeOrganisation"/>
+                </medi:field>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="IDK" truncatable="true" xmltag="IDK">
+                <medi:field required="true" truncatable="false" xmltag="institutionIdentification"/>
+                <medi:field required="true" truncatable="false" xmltag="typeOfInstitution"/>
+                <medi:field required="true" truncatable="false" xmltag="shortName"/>
+                <medi:field required="false" truncatable="false" xmltag="vknr"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="VDT" truncatable="true" xmltag="VDT">
+                <medi:field required="true" truncatable="false" xmltag="effectiveDateFrom"/>
+                <medi:field required="false" truncatable="false" xmltag="effectiveDateTo"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="FKT" truncatable="false" xmltag="FKT">
+                <medi:field required="false" truncatable="false" xmltag="processingFlag"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="0" segcode="VKG" truncatable="true" xmltag="VKG">
+                <medi:field required="true" truncatable="false" xmltag="typeOfLink"/>
+                <medi:field required="true" truncatable="false" xmltag="ikOfLinkPartner"/>
+                <medi:field required="false" truncatable="false" xmltag="serviceProviderGroup"/>
+                <medi:field required="false" truncatable="false" xmltag="ikOfAccountingService"/>
+                <medi:field required="false" truncatable="false" xmltag="typeOfDataDelivery"/>
+                <medi:field required="false" truncatable="false" xmltag="typeOfTransmissionMedium"/>
+                <medi:field required="false" truncatable="false" xmltag="countyOfServiceProvider"/>
+                <medi:field required="false" truncatable="false" xmltag="kvOfServiceProvider"/>
+                <medi:field required="false" truncatable="false" xmltag="rateIndicator"/>
+            </medi:segment>
+            <medi:segmentGroup maxOccurs="-1" minOccurs="0" xmltag="contactPersons">
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="NAM" truncatable="true" xmltag="NAM">
+                    <medi:field required="true" truncatable="false" xmltag="number"/>
+                    <medi:field required="true" truncatable="false" xmltag="name1"/>
+                    <medi:field required="false" truncatable="false" xmltag="name2"/>
+                    <medi:field required="false" truncatable="false" xmltag="name3"/>
+                    <medi:field required="false" truncatable="false" xmltag="name4"/>
+                </medi:segment>
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="1" segcode="ANS" truncatable="true" xmltag="ANS">
+                    <medi:field required="true" truncatable="false" xmltag="typeOfAddress"/>
+                    <medi:field required="true" truncatable="false" xmltag="postalCode"/>
+                    <medi:field required="true" truncatable="false" xmltag="city"/>
+                    <medi:field required="false" truncatable="false" xmltag="address"/>
+                </medi:segment>
+            </medi:segmentGroup>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="0" segcode="ASP" truncatable="true" xmltag="ASP">
+                <medi:field required="true" truncatable="false" xmltag="number"/>
+                <medi:field required="false" truncatable="false" xmltag="phone"/>
+                <medi:field required="false" truncatable="false" xmltag="fax"/>
+                <medi:field required="false" truncatable="false" xmltag="name"/>
+                <medi:field required="false" truncatable="false" xmltag="fieldOfWorkFromContactPerson"/>
+            </medi:segment>
+            <medi:segmentGroup maxOccurs="-1" minOccurs="0" xmltag="transmissions">
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="0" segcode="UEM" truncatable="false" xmltag="UEM">
+                    <medi:field required="false" truncatable="false" xmltag="typeOfTransmissionMedium"/>
+                    <medi:field required="false" truncatable="false" xmltag="parameter"/>
+                    <medi:field required="false" truncatable="false" xmltag="charset"/>
+                </medi:segment>
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="0" segcode="DFU" truncatable="false" xmltag="DFU">
+                    <medi:field required="false" truncatable="false" xmltag="number"/>
+                    <medi:field required="false" truncatable="false" xmltag="transmissionProtocol"/>
+                    <medi:field required="false" truncatable="false" xmltag="userIdentification"/>
+                    <medi:field required="false" truncatable="false" xmltag="transmissionFrom"/>
+                    <medi:field required="false" truncatable="false" xmltag="transmissionTo"/>
+                    <medi:field required="false" truncatable="false" xmltag="transmissionDays"/>
+                    <medi:field required="false" truncatable="false" xmltag="communicationChannel"/>
+                </medi:segment>
+            </medi:segmentGroup>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="0" segcode="UNT" truncatable="false" xmltag="UNT">
+                <medi:field required="false" truncatable="false" xmltag="numberOfUnits"/>
+                <medi:field required="false" truncatable="false" xmltag="messageReferenceNumber"/>
+            </medi:segment>
+        </medi:segmentGroup>
+        <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="0" segcode="UNZ" truncatable="false" xmltag="UNZ">
+            <medi:field required="false" truncatable="false" xmltag="numberOfMessages"/>
+            <medi:field required="false" truncatable="false" xmltag="icrn"/>
+        </medi:segment>
+    </medi:segments>
+</medi:edimap>

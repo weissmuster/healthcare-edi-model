@@ -1,0 +1,122 @@
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.5.xsd">
+    <medi:description name="GKVMessage" version="1.0"/>
+    <medi:delimiters component=":" escape="?" field="+" segment="'"/>
+    <medi:segments xmltag="InvoiceMessage">
+        <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="UNB" truncatable="false" xmltag="UNB">
+            <medi:field required="false" truncatable="false" xmltag="syntax">
+                <medi:component required="false" truncatable="false" xmltag="id"/>
+                <medi:component required="false" truncatable="false" xmltag="version"/>
+            </medi:field>
+            <medi:field required="false" truncatable="false" xmltag="senderIK"/>
+            <medi:field required="false" truncatable="false" xmltag="receiverIK"/>
+            <medi:field required="false" truncatable="false" xmltag="datetime">
+                <medi:component required="false" truncatable="false" xmltag="date"/>
+                <medi:component required="false" truncatable="false" xmltag="time"/>
+            </medi:field>
+            <medi:field required="false" truncatable="false" xmltag="icrn"/>
+            <medi:field required="false" truncatable="false" xmltag="areaOfSupply"/>
+            <medi:field required="false" truncatable="false" xmltag="filename"/>
+            <medi:field required="false" truncatable="false" xmltag="testIndicator"/>
+        </medi:segment>
+        <medi:segmentGroup maxOccurs="-1" minOccurs="1" xmltag="unhs">
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="UNH" truncatable="false" xmltag="UNH">
+                <medi:field required="false" truncatable="false" xmltag="messageReferenceNumber"/>
+                <medi:field required="false" truncatable="false" xmltag="messageIdentifier">
+                    <medi:component required="false" truncatable="false" xmltag="type"/>
+                    <medi:component required="false" truncatable="false" xmltag="version"/>
+                    <medi:component required="false" truncatable="false" xmltag="typeReleaseNumber"/>
+                    <medi:component required="false" truncatable="false" xmltag="administrativeOrganisation"/>
+                </medi:field>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="FKT" truncatable="false" xmltag="FKT">
+                <medi:field required="false" truncatable="false" xmltag="processingFlag"/>
+                <medi:field required="false" truncatable="false" xmltag="collectiveInvoice"/>
+                <medi:field required="false" truncatable="false" xmltag="billerIK"/>
+                <medi:field required="false" truncatable="false" xmltag="receiverIK"/>
+                <medi:field required="false" truncatable="false" xmltag="healthInsuranceIK"/>
+                <medi:field required="false" truncatable="false" xmltag="senderIK"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="REC" truncatable="false" xmltag="REC">
+                <medi:field required="false" truncatable="false" xmltag="invoiceNumber">
+                    <medi:component required="false" truncatable="false" xmltag="invoiceNumber"/>
+                    <medi:component required="false" truncatable="false" xmltag="collectiveInvoiceNumber"/>
+                </medi:field>
+                <medi:field required="false" truncatable="false" xmltag="date"/>
+                <medi:field required="false" truncatable="false" xmltag="invoiceType"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="1" segcode="INV" truncatable="false" xmltag="INV">
+                <medi:field required="false" truncatable="false" xmltag="insuranceNumber"/>
+                <medi:field required="false" truncatable="false" xmltag="insuranceStatus"/>
+                <medi:field required="false" truncatable="false" xmltag="freeField"/>
+                <medi:field required="false" truncatable="false" xmltag="documentNumber"/>
+                <medi:field required="false" truncatable="false" xmltag="contractCharacteristics"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="9" minOccurs="1" segcode="GES" truncatable="false" xmltag="GES">
+                <medi:field required="false" truncatable="false" xmltag="status"/>
+                <medi:field required="false" truncatable="false" xmltag="totalInvoiceAmount"/>
+                <medi:field required="false" truncatable="false" xmltag="totalGrossAmount"/>
+                <medi:field required="false" truncatable="false" xmltag="additionalPayment"/>
+            </medi:segment>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="NAM" truncatable="false" xmltag="NAM">
+                <medi:field required="false" truncatable="false" xmltag="name1"/>
+                <medi:field required="false" truncatable="false" xmltag="name2"/>
+                <medi:field required="false" truncatable="false" xmltag="name3"/>
+                <medi:field required="false" truncatable="false" xmltag="name4"/>
+            </medi:segment>
+            <medi:segmentGroup maxOccurs="-1" minOccurs="1" xmltag="sllas">
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="INV" truncatable="false" xmltag="INV">
+                    <medi:field required="false" truncatable="false" xmltag="insuranceNumber"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredStatus"/>
+                    <medi:field required="false" truncatable="false" xmltag="freeField"/>
+                    <medi:field required="false" truncatable="false" xmltag="documentNumber"/>
+                    <medi:field required="false" truncatable="false" xmltag="plateSpecialCareForm"/>
+                </medi:segment>
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="NAD" truncatable="false" xmltag="NAD">
+                    <medi:field required="false" truncatable="false" xmltag="insuredLastname"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredFirstname"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredBirthday"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredStreedAddress"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredPostalcode"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredCity"/>
+                    <medi:field required="false" truncatable="false" xmltag="insuredCountry"/>
+                </medi:segment>
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="-1" minOccurs="1" segcode="ENF" truncatable="false" xmltag="ENF">
+                    <medi:field required="false" truncatable="false" xmltag="identificationNumber"/>
+                    <medi:field required="false" truncatable="false" xmltag="serviceGroup">
+                        <medi:component required="false" truncatable="false" xmltag="billingCode"/>
+                        <medi:component required="false" truncatable="false" xmltag="rateIndicator"/>
+                    </medi:field>
+                    <medi:field required="false" truncatable="false" xmltag="billingItemNumber"/>
+                    <medi:field required="false" truncatable="false" xmltag="quantity"/>
+                    <medi:field required="false" truncatable="false" xmltag="amount"/>
+                    <medi:field required="false" truncatable="false" xmltag="dateOfServiceProvision"/>
+                    <medi:field required="false" truncatable="false" xmltag="additionalPayment"/>
+                </medi:segment>
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="ZUV" truncatable="false" xmltag="ZUV">
+                    <medi:field required="false" truncatable="false" xmltag="registrationNumber"/>
+                    <medi:field required="false" truncatable="false" xmltag="medicalNumber"/>
+                    <medi:field required="false" truncatable="false" xmltag="medicalPrescriptionDate"/>
+                    <medi:field required="false" truncatable="false" xmltag="additionalPaymentIndicator"/>
+                    <medi:field required="false" truncatable="false" xmltag="accidentIndicator"/>
+                    <medi:field required="false" truncatable="false" xmltag="indicatorBVG"/>
+                    <medi:field required="false" truncatable="false" xmltag="indicatorMedicalPrescriptionFeature"/>
+                </medi:segment>
+                <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="BES" truncatable="false" xmltag="BES">
+                    <medi:field required="false" truncatable="false" xmltag="totalGrossAmount"/>
+                    <medi:field required="false" truncatable="false" xmltag="amountLegalAdditionalPayment"/>
+                    <medi:field required="false" truncatable="false" xmltag="totalAmountLegalAdditionalPayment"/>
+                    <medi:field required="false" truncatable="false" xmltag="allInAdditionalPayment"/>
+                    <medi:field required="false" truncatable="false" xmltag="totalAmountDeductible"/>
+                </medi:segment>
+            </medi:segmentGroup>
+            <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="UNT" truncatable="false" xmltag="UNT">
+                <medi:field required="false" truncatable="false" xmltag="numberOfUnits"/>
+                <medi:field required="false" truncatable="false" xmltag="messageReferenceNumber"/>
+            </medi:segment>
+        </medi:segmentGroup>
+        <medi:segment ignoreUnmappedFields="false" maxOccurs="1" minOccurs="1" segcode="UNZ" truncatable="false" xmltag="UNZ">
+            <medi:field required="false" truncatable="false" xmltag="numberOfMessages"/>
+            <medi:field required="false" truncatable="false" xmltag="icrn"/>
+        </medi:segment>
+    </medi:segments>
+</medi:edimap>
