@@ -57,7 +57,7 @@ public class MessageIdentifierBuilder {
 
   public MessageIdentifierBuilder withSLGAMessageIdentifier() {
     messageIdentifier.setType("SLGA");
-    messageIdentifier.setVersion("17");
+    messageIdentifier.setVersion("18");
     messageIdentifier.setTypeReleaseNumber("0");
     messageIdentifier.setAdministrativeOrganisation("0");
     return this;
@@ -65,7 +65,7 @@ public class MessageIdentifierBuilder {
 
   public MessageIdentifierBuilder withSLLAMessageIdentifier() {
     messageIdentifier.setType("SLLA");
-    messageIdentifier.setVersion("17");
+    messageIdentifier.setVersion("18");
     messageIdentifier.setTypeReleaseNumber("0");
     messageIdentifier.setAdministrativeOrganisation("0");
     return this;
