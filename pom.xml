@@ -3,7 +3,7 @@
 
     <groupId>io.github.weissmuster</groupId>
     <artifactId>healthcare-edi-model</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>HealthCare EDI Model</name>
@@ -34,7 +34,7 @@
         <developerConnection>scm:git:ssh://git@weissmuster.github.com/weissmuster/healthcare-edi-model.git
         </developerConnection>
         <url>https://github.com/weissmuster/healthcare-edi-model</url>
-      <tag>healthcare-edi-model-0.0.2</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
