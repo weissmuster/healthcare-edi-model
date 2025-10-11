@@ -3,7 +3,7 @@
 
     <groupId>io.github.weissmuster</groupId>
     <artifactId>healthcare-edi-model</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
     <packaging>jar</packaging>
 
     <name>HealthCare EDI Model</name>
